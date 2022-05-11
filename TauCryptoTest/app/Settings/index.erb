@@ -1,0 +1,23 @@
+<div class="border d-flex justify-content-between">
+  <a href="<%= Rho::Application.startURI %>" class="m-1 btn btn-secondary btn-sm">Home</a>
+
+  <h3>Settings</h3>
+
+  <span></span>
+</div>
+
+<div class="container-fluid p-1">
+
+
+  <div class="list-group">
+
+    <% if @msg %>
+    <div class="alert alert-danger"><%= @msg %></div>
+    <% end %>
+
+    
+
+  </div>
+
+
+</div>

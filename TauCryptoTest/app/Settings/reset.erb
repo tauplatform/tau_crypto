@@ -1,0 +1,19 @@
+<div class="border d-flex justify-content-between">
+  <a href="<%= url_for :action => :index %>" class="m-1 btn btn-secondary btn-sm">Cancel</a>
+
+  <h3>Settings</h3>
+
+  <a href="<%= url_for :action => :do_reset %>" class="m-1 btn btn-danger btn-sm">Confirm</a>
+
+</div>
+
+<div class="container-fluid">
+
+  <div class="text-center alert alert-danger mt-5">
+    <h4 class="text-center">Are you sure?</h4>
+
+    <p>Resetting removes all objects from your device.</p>
+  </div>
+
+
+</div>
