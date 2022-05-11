@@ -1,6 +1,5 @@
 require 'openssl'
 require 'base64'
-require 'yaml'
 
 
 COMMAND_CREATE_KEY = "-create_key"
@@ -8,6 +7,8 @@ COMMAND_ENCRYPT = "-private_encrypt"
 COMMAND_DECRYPT = "-public_decrypt"
 
 YAML_DATA_ARRAY_BLOCK = "data"
+YAML_DATA_ARRAY_DELIMITER = ";"
+
 
 def help
   print "
@@ -73,9 +74,11 @@ def do_private_encrypt(private_key_file, input_file, output_file)
 
         output_yaml[YAML_DATA_ARRAY_BLOCK] << output_data_64
     end
+    output_data = output_yaml[YAML_DATA_ARRAY_BLOCK].join(YAML_DATA_ARRAY_DELIMITER)
 
     puts " Save encrypted data into "+output_file
-    File.write(output_file, output_yaml.to_yaml)
+    #File.write(output_file, output_yaml.to_yaml)
+    File.write(output_file, output_data)
 
     puts " private encrypt FINISH"
 end
@@ -87,8 +90,10 @@ def do_public_decrypt(public_key_file, input_file, output_file)
     public_key = OpenSSL::PKey::RSA.new File.read public_key_file
 
     puts " Load encrypted data from "+input_file
-    input_file_yaml = YAML::load_file(input_file)
-    input_array = input_file_yaml[YAML_DATA_ARRAY_BLOCK]
+    #input_file_yaml = YAML::load_file(input_file)
+    input_file_yaml = File.read input_file
+    #input_array = input_file_yaml[YAML_DATA_ARRAY_BLOCK]
+    input_array = input_file_yaml.split(YAML_DATA_ARRAY_DELIMITER)
 
     output_array = []
 
@@ -104,7 +109,7 @@ def do_public_decrypt(public_key_file, input_file, output_file)
 
     puts " Save decrypted data into "+output_file
     File.write(output_file, output_data)
-    
+
     puts " public decrypt FINISH"
 end
 
